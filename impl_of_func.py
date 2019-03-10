@@ -49,7 +49,12 @@ class NeuralNet:
 				sizecur = layer_fields[layer][0]
 
 				X_cur  = func.normal_full_layer(X_cur,int(sizecur))
+			elif layer_type[layer] == 'IN':
+				
+				X_cur= func.incep_layer(X_cur,layer_fields[layer][0],layer_fields[layer][1],layer_fields[layer][2])
 
+                
+           
 		y_preds = X_cur
 
 		cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=y_preds,labels= y_true))
