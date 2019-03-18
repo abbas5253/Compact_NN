@@ -79,7 +79,7 @@ class NeuralNet:
 						s_ = [int(k) for k in s_]
 						p_ = input('Padding for layer inceptions {}'.format(layer))
 						tem.append([f_,s_,p_])
-					elif layer == 'CNN-CNN':
+					elif layer == 'CNN-CNN' or layer == 'POOL-CNN':
 						f_1 = input('filter for layer inceptions{} '.format(layer)).split(',')
 						f_1 = [int(k) for k in f_1]
 						s_1= input('Strides for layer inceptions{} '.format(layer)).split(',')
@@ -91,19 +91,8 @@ class NeuralNet:
 						s_2 = [int(k) for k in s_2]
 						p_2 = input('Padding for layer inceptions{} '.format(layer))
 						tem.append([f_1,s_1,p_1,f_2,s_2,p_2])
-					elif layer == 'POOL-CNN':
-						f_11 = input('filter for layer inceptions{} '.format(layer)).split(',')
-						f_11 = [int(k) for k in f_11]
-						s_11= input('Strides for layer inceptions{} '.format(layer)).split(',')
-						s_11 = [int(k) for k in s_11]
-						p_11 = input('Padding for layer inceptions{} '.format(layer))
-						f_22 = input('filter for layer inceptions{} '.format(layer)).split(',')
-						f_22 = [int(k) for k in f_22]
-						s_22 = input('Strides for layer inceptions{} '.format(layer)).split(',')
-						s_22 = [int(k) for k in s_22]
-						p_22 = input('Padding for layer inceptions{} '.format(layer))
-						tem.append([f_11,s_11,p_11,f_22,s_22,p_22])
-					self.layer_feilds[i].append(tem)
+					
+				self.layer_feilds[i].append(tem)
 				self.layer_feilds[i].append('a'+str(i))
 
 
