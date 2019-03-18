@@ -48,44 +48,8 @@ class NeuralNet:
 				self.feilds[i].append(strides)
 				self.feilds[i].append(pad)
 			elif layer_type[i] == 'IN':
-				incep_layer = input('LAYER_TYPE FOR IN {}'.format(i+1)).split(',')
+				incep_layer = wg.Text(description='incep_layer_type for incep{}'.format(i+1))
 				self.feilds[i].append(incep_layer)
-				tem = []
-				for layer in incep_layer:
-					if layer  == 'CNN':
-						f_ = input('filter for layer inceptions{} / {} '.format(i+1,layer)).split(',')
-						f_ = [int(k) for k in f_]
-						s_ = input('Strides for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						s_ = [int(k) for k in s_]
-						p_ = input('Padding for layer inceptions{}/{}'.format(i+1,layer))
-						tem.append([f_,s_,p_])
-					elif layer == 'CNN-CNN':
-						f_1 = input('filter for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						f_1 = [int(k) for k in f_1]
-						s_1= input('Strides for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						s_1 = [int(k) for k in s_1]
-						p_1 = input('Padding for layer inceptions{}/{}'.format(i+1,layer))
-						f_2 = input('filter for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						f_2 = [int(k) for k in f_2]
-						s_2 = input('Strides for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						s_2 = [int(k) for k in s_2]
-						p_2 = input('Padding for layer inceptions{}/{}'.format(i+1,layer))
-						tem.append([f_1,s_1,p_1,f_2,s_2,p_2])
-					elif layer == 'POOL-CNN':
-						f_11 = input('filter for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						f_11 = [int(k) for k in f_11]
-						s_11= input('Strides for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						s_11 = [int(k) for k in s_11]
-						p_11 = input('Padding for layer inceptions{}/{}'.format(i+1,layer))
-						f_22 = input('filter for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						f_22 = [int(k) for k in f_22]
-						s_22 = input('Strides for layer inceptions{}/{}'.format(i+1,layer)).split(',')
-						s_22 = [int(k) for k in s_22]
-						p_22 = input('Padding for layer inceptions{}/{}'.format(i+1,layer))
-						tem.append([f_11,s_11,p_11,f_22,s_22,p_22])
-					self.feilds[i].append(tem)
-					
-
 			else:
 				Size = wg.Text(description= 'Size{}'.format(i+1))
 				self.feilds[i].append(Size)
@@ -97,14 +61,54 @@ class NeuralNet:
 				display(self.feilds[i][j])
             
 	def set_input_layer_feilds(self):
-		self.layer_feilds = [[self.feilds[i][j]  for j in range(len(self.feilds[i]))] for i in range(len(self.feilds))]
+		self.layer_feilds = [[self.feilds[i][j].value  for j in range(len(self.feilds[i]))] for i in range(len(self.feilds))]
 		for i in range(len(self.layer_type)):
 			if self.layer_type[i] == 'CNN':
-				self.layer_feilds[i] = [[int(k) for k in self.layer_feilds[i][0].value.split(',')]]+[[int(k) for k in self.layer_feilds[i][1].value.split(',')]]+[self.layer_feilds[i][2].value]
+				self.layer_feilds[i] = [[int(k) for k in self.layer_feilds[i][0].split(',')]]+[[int(k) for k in self.layer_feilds[i][1].split(',')]]+[self.layer_feilds[i][2]]
 			elif self.layer_type[i] == 'POOL':
-				self.layer_feilds[i] = [[int(k) for k in self.layer_feilds[i][0].value.split(',')]]+[[int(k) for k in self.layer_feilds[i][1].value.split(',')]]+[self.layer_feilds[i][2].value]
+				self.layer_feilds[i] = [[int(k) for k in self.layer_feilds[i][0].split(',')]]+[[int(k) for k in self.layer_feilds[i][1].split(',')]]+[self.layer_feilds[i][2]]
+			elif self.layer_type[i] == 'IN':
+				self.layer_feilds[i] = [self.layer_feilds[i][0].split(',')]
+				tem = []
+				incep_layer = self.layer_feilds[i][0]
+				for layer in incep_layer:
+					if layer  == 'CNN':
+						f_ = input('filter for layer inceptions {} '.format(layer)).split(',')
+						f_ = [int(k) for k in f_]
+						s_ = input('Strides for layer inceptions {}'.format(layer)).split(',')
+						s_ = [int(k) for k in s_]
+						p_ = input('Padding for layer inceptions {}'.format(layer))
+						tem.append([f_,s_,p_])
+					elif layer == 'CNN-CNN':
+						f_1 = input('filter for layer inceptions{} '.format(layer)).split(',')
+						f_1 = [int(k) for k in f_1]
+						s_1= input('Strides for layer inceptions{} '.format(layer)).split(',')
+						s_1 = [int(k) for k in s_1]
+						p_1 = input('Padding for layer inceptions{} '.format(layer))
+						f_2 = input('filter for layer inceptions{} '.format(layer)).split(',')
+						f_2 = [int(k) for k in f_2]
+						s_2 = input('Strides for layer inceptions{} '.format(layer)).split(',')
+						s_2 = [int(k) for k in s_2]
+						p_2 = input('Padding for layer inceptions{} '.format(layer))
+						tem.append([f_1,s_1,p_1,f_2,s_2,p_2])
+					elif layer == 'POOL-CNN':
+						f_11 = input('filter for layer inceptions{} '.format(layer)).split(',')
+						f_11 = [int(k) for k in f_11]
+						s_11= input('Strides for layer inceptions{} '.format(layer)).split(',')
+						s_11 = [int(k) for k in s_11]
+						p_11 = input('Padding for layer inceptions{} '.format(layer))
+						f_22 = input('filter for layer inceptions{} '.format(layer)).split(',')
+						f_22 = [int(k) for k in f_22]
+						s_22 = input('Strides for layer inceptions{} '.format(layer)).split(',')
+						s_22 = [int(k) for k in s_22]
+						p_22 = input('Padding for layer inceptions{} '.format(layer))
+						tem.append([f_11,s_11,p_11,f_22,s_22,p_22])
+					self.layer_feilds[i].append(tem)
+				self.layer_feilds[i].append('a'+str(i))
+
+
 			else:
-				self.layer_feilds[i] = [int(self.layer_feilds[i][0].value)]
+				self.layer_feilds[i] = [int(self.layer_feilds[i][0])]
 
 
 	def CompactNeuralNetwork(self,x_in,y_true,hidden_layers=6,layer_type=['CNN','POOL','CNN','POOL','FC','FC'],layer_fields=[[[5,5,1,32],[1,1],'SAME'],[[2,2],[2,2],'SAME'],[[5,5,32,64],[1,1],'SAME'],[[2,2],[2,2],'SAME'],[512],[10]],hold_prob=0.4,Optimization='Adam',learning_rate = 0.01):
@@ -160,7 +164,7 @@ class NeuralNet:
 				X_cur  = func.normal_full_layer(X_cur,int(sizecur))
 				print(X_cur)
 
-			elif layer_type[layer] == 'FC-False':
+			elif layer_type[layer] == 'FC_False':
 
 				s = [int(f) for f in X_cur.get_shape()[1:]]
 			
