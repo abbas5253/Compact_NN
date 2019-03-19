@@ -33,17 +33,10 @@ class NeuralNet:
 		layer_type = self.layer_type
 		self.feilds= [[] for _ in range(len(layer_type))]
 		for i in range(len(layer_type)):
-			if layer_type[i] == 'CNN':
+			if layer_type[i] == 'CNN' or layer_type[i] == 'POOL' or layer_type[i] == 'APOOL':
 				filters = wg.Text(description='filter{}'.format(i+1))
-				strides = wg.Text(description= 'Strd{}'.format(i+1))
-				pad = wg.Text(description= 'Padding{}'.format(i+1))
-				self.feilds[i].append(filters)
-				self.feilds[i].append(strides)
-				self.feilds[i].append(pad)
-			elif layer_type[i] == 'POOL':
-				filters = wg.Text(description='filter{}'.format(i+1))
-				strides = wg.Text(description= 'Strd{}'.format(i+1))
-				pad = wg.Text(description= 'Padding{}'.format(i+1))
+				strides = wg.Text(value = '1,1',description= 'Strd{}'.format(i+1))
+				pad = wg.Text(value = 'SAME',description= 'Padding{}'.format(i+1))
 				self.feilds[i].append(filters)
 				self.feilds[i].append(strides)
 				self.feilds[i].append(pad)
@@ -71,25 +64,23 @@ class NeuralNet:
 				self.layer_feilds[i] = [self.layer_feilds[i][0].split(',')]
 				tem = []
 				incep_layer = self.layer_feilds[i][0]
+				print("Enter the parameters for inceptions layers :- \n")
 				for layer in incep_layer:
 					if layer  == 'CNN':
 						f_ = input('filter for layer inceptions {} '.format(layer)).split(',')
 						f_ = [int(k) for k in f_]
-						s_ = input('Strides for layer inceptions {}'.format(layer)).split(',')
-						s_ = [int(k) for k in s_]
-						p_ = input('Padding for layer inceptions {}'.format(layer))
+						s_ = [1,1]
+						p_ = 'SAME'
 						tem.append([f_,s_,p_])
 					elif layer == 'CNN-CNN' or layer == 'POOL-CNN':
 						f_1 = input('filter for layer inceptions{} '.format(layer)).split(',')
 						f_1 = [int(k) for k in f_1]
-						s_1= input('Strides for layer inceptions{} '.format(layer)).split(',')
-						s_1 = [int(k) for k in s_1]
-						p_1 = input('Padding for layer inceptions{} '.format(layer))
+						s_1 = [1,1]
+						p_1 = 'SAME'
 						f_2 = input('filter for layer inceptions{} '.format(layer)).split(',')
 						f_2 = [int(k) for k in f_2]
-						s_2 = input('Strides for layer inceptions{} '.format(layer)).split(',')
-						s_2 = [int(k) for k in s_2]
-						p_2 = input('Padding for layer inceptions{} '.format(layer))
+						s_2 = [1,1]
+						p_2 = 'SAME'
 						tem.append([f_1,s_1,p_1,f_2,s_2,p_2])
 					
 				self.layer_feilds[i].append(tem)
